@@ -11,12 +11,12 @@ module.exports = function (config) {
 
             // frameworks to use
             // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-            frameworks: ['jasmine', 'es6-shim'],
+            frameworks: ['jasmine'],
 
 
             // list of files / patterns to load in the browser
             files: [
-                './spec/main.js'
+                'spec/main.js'
             ],
 
 
@@ -29,25 +29,14 @@ module.exports = function (config) {
             preprocessors: {
                 './spec/main.js': ['webpack']
             },
-            babelPreprocessor: {
-                options: {
-                    presets: ['es2015'],
-                    plugins: ['transform-es2015-modules-umd'],
-                    sourceMap: 'inline'
-                },
-            },
             webpack: {
                 module: {
                     rules: [
                         {
                             test: /\.js$/,
-                            exclude: /spec/,
-                            loader: 'isparta-loader'
-                        },
-                        {
-                            test: /\.js$/,
-                            exclude: /src/,
-                            loader: 'babel-loader'
+                            loader: 'babel-loader',
+                            options: { presets: ['es2015'], plugins: [['istanbul', {exclude: ['spec']}]] },
+                            enforce: 'post'
                         }
                     ]
 
@@ -61,7 +50,16 @@ module.exports = function (config) {
             // possible values: 'dots', 'progress'
             // available reporters: https://npmjs.org/browse/keyword/karma-reporter
             reporters: ['spec', 'coverage'],
+            coverageReporter: {
 
+                // reports can be any that are listed here: https://github.com/istanbuljs/istanbul-reports/tree/590e6b0089f67b723a1fdf57bc7ccc080ff189d7/lib
+                reporters: [{type: 'html'}, {type: 'text-summary'}],
+
+                // base output directory. If you include %browser% in the path it will be replaced with the karma browser name
+
+                // if using webpack and pre-loaders, work around webpack breaking the source path
+                fixWebpackSourcePaths: true,
+            },
 
             // web server port
             port: 9876,
