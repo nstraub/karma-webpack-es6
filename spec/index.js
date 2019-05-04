@@ -1,4 +1,4 @@
-import test from '../src/main';
+import test from '../src';
 
 describe('spec', function () {
     it('passing test', function () {

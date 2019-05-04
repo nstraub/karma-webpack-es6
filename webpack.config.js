@@ -1,6 +1,7 @@
 module.exports = {
+    mode: 'production',
     entry: {
-        main: './src/main.js'
+        main: './src/index.js'
     },
     output: {
         libraryTarget: 'umd',

@@ -16,7 +16,7 @@ module.exports = function (config) {
 
             // list of files / patterns to load in the browser
             files: [
-                'spec/main.js'
+                'spec/index.js'
             ],
 
 
@@ -27,15 +27,16 @@ module.exports = function (config) {
             // preprocess matching files before serving them to the browser
             // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
             preprocessors: {
-                './spec/main.js': ['webpack']
+                './spec/index.js': ['webpack']
             },
             webpack: {
+                mode: 'development',
                 module: {
                     rules: [
                         {
                             test: /\.js$/,
                             loader: 'babel-loader',
-                            options: { presets: ['es2015'], plugins: [['istanbul', {exclude: ['spec']}]] },
+                            options: { presets: ['@babel/env'], plugins: [['istanbul', {exclude: ['spec']}]] },
                             enforce: 'post'
                         }
                     ]
@@ -82,7 +83,7 @@ module.exports = function (config) {
             // start these browsers
             // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
             // browsers: ['Chrome'],
-            browsers: ['PhantomJS'],
+            browsers: ['ChromeHeadless'],
 
 
             // Continuous Integration mode
